@@ -1,7 +1,6 @@
 import { Image, StyleSheet, Platform } from "react-native";
 import { useState, useEffect } from "react";
 
-import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -9,12 +8,11 @@ import { ThemedView } from "@/components/ThemedView";
 export default function HomeScreen() {
 	const [text, setText] = useState("");
 	useEffect(() => {
-		console.log("check");
-		fetch("http://127.0.0.1:8080/")
+		//fetch("http://127.0.0.1:8080/")
+		fetch("https://weather.tsukumijima.net/api/forecast/city/110010")
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
-				setText(data);
+				setText(data.forecasts[0].detail.weather);
 			});
 	}, []);
 	return (
@@ -29,7 +27,6 @@ export default function HomeScreen() {
 		>
 			<ThemedView style={styles.titleContainer}>
 				<ThemedText type="title">{text}</ThemedText>
-				<HelloWave />
 			</ThemedView>
 			<ThemedView style={styles.stepContainer}>
 				<ThemedText type="subtitle">Step 1: Try it</ThemedText>
@@ -80,7 +77,8 @@ const styles = StyleSheet.create({
 	titleContainer: {
 		flexDirection: "row",
 		alignItems: "center",
-		gap: 8,
+		marginTop: 8,
+		gap: 16,
 	},
 	stepContainer: {
 		gap: 8,
