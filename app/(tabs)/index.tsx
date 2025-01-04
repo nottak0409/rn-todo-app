@@ -8,7 +8,14 @@ import { ThemedView } from "@/components/ThemedView";
 export default function HomeScreen() {
 	const [text, setText] = useState("");
 	useEffect(() => {
-		//fetch("http://127.0.0.1:8080/")
+		fetch("http://127.0.0.1:8080")
+			.then((response) => {
+				console.log("test");
+				console.log(response.text());
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 		fetch("https://weather.tsukumijima.net/api/forecast/city/110010")
 			.then((response) => response.json())
 			.then((data) => {
