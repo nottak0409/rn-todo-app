@@ -8,18 +8,16 @@ import { ThemedView } from "@/components/ThemedView";
 export default function HomeScreen() {
 	const [text, setText] = useState("");
 	useEffect(() => {
-		fetch("http://127.0.0.1:8080")
-			.then((response) => {
-				console.log("test");
-				console.log(response.text());
+		fetch("http://192.168.40.31:8080/", {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then(async (response) => {
+				setText(await response.text());
 			})
 			.catch((error) => {
 				console.log(error);
-			});
-		fetch("https://weather.tsukumijima.net/api/forecast/city/110010")
-			.then((response) => response.json())
-			.then((data) => {
-				setText(data.forecasts[0].detail.weather);
 			});
 	}, []);
 	return (
