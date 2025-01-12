@@ -1,25 +1,16 @@
 import { Image, StyleSheet, Platform } from "react-native";
-import { useState, useEffect } from "react";
-
+import { useFetch } from "@/hooks/useFetch";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 
 export default function HomeScreen() {
-	const [text, setText] = useState("");
-	useEffect(() => {
-		fetch("http://192.168.40.31:8080/", {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-			.then(async (response) => {
-				setText(await response.text());
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	}, []);
+	const { data: text, error } = useFetch("http://192.168.40.31:8080/");
+
+	if (error) {
+		console.log(error);
+	}
+
 	return (
 		<ParallaxScrollView
 			headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
